@@ -1,0 +1,19 @@
+[package]
+name = "bevy-orbit-controls"
+version = "1.0.2"
+authors = ["iMplode nZ <rg@youxplode.com>"]
+license = "ISC"
+edition = "2018"
+repository = "https://github.com/Counterproduction-game/Counterproduction"
+description = "An orbit controls plugin for bevy."
+[lib]
+name = "bevy_orbit_controls"
+
+[[test]]
+name = "test"
+path = "test/main.rs"
+harness = false
+test = false
+
+[dependencies]
+bevy = { version = "0.4.0", default-features = false, features = [ "render" ] }
