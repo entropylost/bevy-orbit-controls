@@ -35,6 +35,7 @@ pub struct OrbitCamera {
     pub center: Vec3,
     pub rotate_sensitivity: f32,
     pub zoom_sensitivity: f32,
+    pub enabled: bool,
 }
 
 impl Default for OrbitCamera {
@@ -46,6 +47,7 @@ impl Default for OrbitCamera {
             center: Vec3::ZERO,
             rotate_sensitivity: 1.0,
             zoom_sensitivity: 0.8,
+            enabled: true,
         }
     }
 }
@@ -59,6 +61,7 @@ impl OrbitCamera {
             center,
             rotate_sensitivity: 1.0,
             zoom_sensitivity: 0.8,
+            enabled: true,
         }
     }
 }
@@ -76,6 +79,9 @@ impl OrbitCameraPlugin {
             delta += event.delta;
         }
         for (mut camera, mut transform, _) in query.iter_mut() {
+            if !camera.enabled {
+                continue;
+            }
             if mouse_button_input.pressed(MouseButton::Left) {
                 camera.x -= delta.x * camera.rotate_sensitivity * time.delta_seconds();
                 camera.y -= delta.y * camera.rotate_sensitivity * time.delta_seconds();
@@ -104,6 +110,9 @@ impl OrbitCameraPlugin {
                 };
         }
         for (mut camera, mut transform, _) in query.iter_mut() {
+            if !camera.enabled {
+                continue;
+            }
             camera.distance *= camera.zoom_sensitivity.powf(total);
             let translation = &mut transform.translation;
             *translation =
