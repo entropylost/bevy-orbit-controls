@@ -1,24 +1,29 @@
 //! An orbit controls plugin for bevy.
 //!
-//! # Usage
+//! To control the camera, drag the mouse. The left button rotates. The wheel
+//! zooms.
 //!
-//! Register the `OrbitCameraPlugin`, and add the `OrbitCamera` struct to the
-//! entity containing the camera.
+//! ## Usage
+//!
+//! Register the [`OrbitCameraPlugin`], and insert the [`OrbitCamera`] struct
+//! into the entity containing the camera.
 //!
 //! For example, within the startup system:
 //!
-//! ```ignore
+//! ```no_compile
 //! commands
-//!     .spawn(Camera3dBundle {
+//!     .spawn_bundle(PerspectiveCameraBundle {
 //!         transform: Transform::from_translation(Vec3::new(-3.0, 3.0, 5.0))
-//!             .looking_at(Vec3::default(), Vec3::unit_y()),
+//!             .looking_at(Vec3::default(), Vec3::Y),
 //!         ..Default::default()
 //!     })
-//!     .with(OrbitCamera::default());
+//!     .insert(OrbitCamera::default());
 //! ```
 //!
-//! To control the camera, use dragging (left button) to rotate and the mouse
-//! wheel to zoom.
+//! ## Compatibility
+//!
+//! - `v2.x` – Bevy `0.5`.
+//! - `v1.x` – Bevy `0.4`.
 
 use bevy::input::mouse::MouseMotion;
 use bevy::input::mouse::MouseScrollUnit::{Line, Pixel};
@@ -122,8 +127,7 @@ impl OrbitCameraPlugin {
 }
 impl Plugin for OrbitCameraPlugin {
     fn build(&self, app: &mut AppBuilder) {
-        app
-            .add_system(Self::mouse_motion_system.system())
+        app.add_system(Self::mouse_motion_system.system())
             .add_system(Self::zoom_system.system());
     }
 }
