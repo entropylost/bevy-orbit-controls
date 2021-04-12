@@ -10,7 +10,7 @@
 //!
 //! For example, within the startup system:
 //!
-//! ```ignore
+//! ```no_compile
 //! commands
 //!     .spawn_bundle(PerspectiveCameraBundle {
 //!         transform: Transform::from_translation(Vec3::new(-3.0, 3.0, 5.0))
