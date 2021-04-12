@@ -2,12 +2,12 @@
 
 An orbit controls plugin for bevy.
 
-To control the camera, use dragging. The left button rotates. The
+To control the camera, drag the mouse. The left button rotates. The
 wheel zooms.
 
 ## Usage
 
-Register the [`OrbitCameraPlugin`], and insert the [`OrbitCamera`] struct
+Register the `OrbitCameraPlugin`, and insert the `OrbitCamera` struct
 into the entity containing the camera.
 
 For example, within the startup system:
@@ -20,7 +20,6 @@ commands
         ..Default::default()
     })
     .insert(OrbitCamera::default());
-# }
 ```
 
 ## Compatibility

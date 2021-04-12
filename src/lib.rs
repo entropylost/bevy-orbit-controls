@@ -1,7 +1,7 @@
 //! An orbit controls plugin for bevy.
 //!
-//! To control the camera, use dragging. The left button rotates. The
-//! wheel zooms.
+//! To control the camera, drag the mouse. The left button rotates. The wheel
+//! zooms.
 //!
 //! ## Usage
 //!
