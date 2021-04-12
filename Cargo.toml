@@ -4,7 +4,9 @@ version = "2.0.0"
 authors = ["iMplode nZ <rg@youxplode.com>"]
 license = "ISC"
 edition = "2018"
-repository = "https://github.com/Counterproduction-game/Counterproduction"
+readme = "README.md"
+repository = "https://github.com/iMplode-nZ/bevy-orbit-controls"
+documentation = "https://docs.rs/bevy-orbit-controls/"
 description = "An orbit controls plugin for bevy."
 [lib]
 name = "bevy_orbit_controls"
