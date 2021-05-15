@@ -39,7 +39,10 @@ pub struct OrbitCamera {
     pub distance: f32,
     pub center: Vec3,
     pub rotate_sensitivity: f32,
+    pub pan_sensitivity: f32,
     pub zoom_sensitivity: f32,
+    pub rotate_button: MouseButton,
+    pub pan_button: MouseButton,
     pub enabled: bool,
 }
 
@@ -51,7 +54,10 @@ impl Default for OrbitCamera {
             distance: 5.0,
             center: Vec3::ZERO,
             rotate_sensitivity: 1.0,
+            pan_sensitivity: 1.0,
             zoom_sensitivity: 0.8,
+            rotate_button: MouseButton::Left,
+            pan_button: MouseButton::Right,
             enabled: true,
         }
     }
@@ -60,13 +66,9 @@ impl Default for OrbitCamera {
 impl OrbitCamera {
     pub fn new(dist: f32, center: Vec3) -> OrbitCamera {
         OrbitCamera {
-            x: 0.0,
-            y: 0.0,
             distance: dist,
             center,
-            rotate_sensitivity: 1.0,
-            zoom_sensitivity: 0.8,
-            enabled: true,
+            ..Self::default()
         }
     }
 }
@@ -87,7 +89,8 @@ impl OrbitCameraPlugin {
             if !camera.enabled {
                 continue;
             }
-            if mouse_button_input.pressed(MouseButton::Left) {
+
+            if mouse_button_input.pressed(camera.rotate_button) {
                 camera.x -= delta.x * camera.rotate_sensitivity * time.delta_seconds();
                 camera.y -= delta.y * camera.rotate_sensitivity * time.delta_seconds();
 
@@ -98,6 +101,15 @@ impl OrbitCameraPlugin {
                 transform.translation =
                     (rot * Vec3::new(0.0, 1.0, 0.0)) * camera.distance + camera.center;
                 transform.look_at(camera.center, Vec3::Y);
+            }
+            
+            if mouse_button_input.pressed(camera.pan_button) {
+                let right_dir = transform.rotation * -Vec3::X;
+                let up_dir = transform.rotation * Vec3::Y;
+
+                let pan_vector = (delta.x * right_dir + delta.y * up_dir) * camera.pan_sensitivity * time.delta_seconds();
+                camera.center += pan_vector;
+                transform.translation += pan_vector;
             }
         }
     }
